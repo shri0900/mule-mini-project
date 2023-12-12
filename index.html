@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Salesforce Account</title>
+</head>
+<body>
+
+    <h2>Create Salesforce Account</h2>
+
+    <form id="accountForm">
+        <label for="accountName">Account Name:</label>
+        <input type="text" id="accountName" name="accountName" required>
+
+        <label for="accountPhone">Account Phone:</label>
+        <input type="text" id="accountPhone" name="accountPhone" required>
+
+        <button type="button" onclick="createAccount()">Submit</button>
+    </form>
+
+    <script>
+        function createAccount() {
+            // Get values from input fields
+            var accountName = document.getElementById("accountName").value;
+            var accountPhone = document.getElementById("accountPhone").value;
+
+            // Create payload object
+            var payload = [
+                {
+                    "Name": accountName,
+                    "Phone": accountPhone
+                }
+            ];
+
+            // Make HTTP POST request to MuleSoft API
+            fetch('http://localhost:8081/test', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Account created successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating account. Please check the console for details.');
+            });
+        }
+    </script>
+
+</body>
+</html>
